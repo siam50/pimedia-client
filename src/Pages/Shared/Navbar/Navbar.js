@@ -16,8 +16,12 @@ const Navbar = () => {
         <li><Link to='/media'>Media</Link></li>
         <>
             {user?.email ?
-                <li><button onClick={handleLogOut}>Logout</button></li>
-                : <li><Link to='/login'>Login</Link></li>}
+                <>
+                    <li><Link to='/about'>About</Link></li>
+                    <li><button onClick={handleLogOut}>Logout</button></li>
+                </>
+                : <li><Link to='/login'>Login</Link></li>
+            }
         </>
     </React.Fragment>
 

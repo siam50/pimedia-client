@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 
 const PostCreate = () => {
+    const { user } = useContext(AuthContext)
     const imgHostKey = process.env.REACT_APP_imgbb_key;
 
     const handlePost = event => {
@@ -51,7 +54,11 @@ const PostCreate = () => {
                             <form onSubmit={handlePost}>
                                 <textarea name='message' className="textarea textarea-bordered w-full block mb-1" placeholder="Post"></textarea>
                                 <input type="file" name='image' className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
-                                <button type='submit' className="btn btn-accent lg:ml-5">Post</button>
+                                <>
+                                    {user ?
+                                        <button type='submit' className="btn btn-accent lg:ml-5">Post</button>
+                                        : <Link to='/login'><button type='submit' className="btn btn-accent lg:ml-5">post</button></Link>}
+                                </>
                             </form>
                         </div>
                     </div>
