@@ -13,6 +13,7 @@ const Navbar = () => {
 
     const menuItems = <React.Fragment>
         <li><Link to='/'>Home</Link></li>
+        <li><Link to='/media'>Media</Link></li>
         <>
             {user?.email ?
                 <li><button onClick={handleLogOut}>Logout</button></li>

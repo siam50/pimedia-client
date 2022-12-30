@@ -8,7 +8,7 @@ const PostCreate = () => {
         event.preventDefault()
 
         const form = event.target;
-        const massage = form.massage.value;
+        const message = form.message.value;
         const image = form.image.files[0];
 
         formData.append('image', image)
@@ -20,12 +20,26 @@ const PostCreate = () => {
             .then(res => res.json())
             .then(imgData => {
                 if (imgData.success) {
-                    console.log(imgData.data.url)
+                    form.reset()
+                    const post = {
+                        message,
+                        image: imgData.data.url
+                    }
+
+                    fetch('https://y-mauve-chi.vercel.app/posts', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify(post)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data)
+                        })
+
                 }
             })
-            .catch((error) => {
-                console.log(error);
-            });
     }
     return (
         <section class="py-10 bg-gray-50 sm:py-16 lg:py-16 my-12">
@@ -35,7 +49,7 @@ const PostCreate = () => {
                         <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl lg:mb-8 mb-4">Share your post</h2>
                         <div>
                             <form onSubmit={handlePost}>
-                                <textarea name='massage' className="textarea textarea-bordered w-full block mb-1" placeholder="Post"></textarea>
+                                <textarea name='message' className="textarea textarea-bordered w-full block mb-1" placeholder="Post"></textarea>
                                 <input type="file" name='image' className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
                                 <button type='submit' className="btn btn-accent lg:ml-5">Post</button>
                             </form>
